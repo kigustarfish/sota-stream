@@ -1,0 +1,44 @@
+#enable twitch chat?
+twitch_enabled: 1
+
+#twitch username, required for twitch
+twitch_username: "kigustarfish"
+
+#twitch oauth visit https://twitchapps.com/tmi/ (required for twitch) this needs to be refreshed every 6 hours or so, long term solution coming
+twitch_oauth: "oauth:"
+
+#sota Avatar name
+sota_name: "Kor"
+
+#sota log directory open /datadir and then the chat log directory and copy that path
+sota_log_path: "~/.config/Portalarium/Shroud of the Avatar/ChatLogs/"
+
+#max length of chat
+max_size: 8
+
+#chat config, name of the type of chat, 1 for enabled 0 for disabled
+chats:
+    #shows when someone goes online or offline on friends
+    onlineOffline: 0
+    #when you get a kill on anything
+    myKills: 1
+    #local chat
+    localChat: 1
+    #whenever you die
+    myDeaths: 1
+    #guild chat
+    guildChat: 0
+    #zone chat
+    zoneChat: 1
+    #anything gets killed near you
+    localKills: 1
+    #whispers to other people
+    whispersFromMe: 0
+    #whispers from other people
+    whispersToMe: 0
+    #when I hit or get hit
+    selfCombat: 0
+    #my party chat
+    partyChat: 1
+    #everything else
+    other: 0

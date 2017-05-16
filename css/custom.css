@@ -1,0 +1,56 @@
+@font-face {
+    font-family:sotaFont;
+    src: url('/css/New Britannia Runic Stroke Dots.ttf');
+}
+body {
+    background-image: url('/css/dark background.png');
+    background-position: 30% 20%;
+    padding: 0px;
+    margin: 0px;
+    overflow-x: hidden; /* For Opera */
+    -webkit-box-shadow:
+        inset rgba(0,0,0,0.5) 0 0 0 5px;
+    -moz-box-shadow:
+        inset rgba(0,0,0,0.5) 0 0 0 5px;
+    box-shadow:
+        inset rgba(0,0,0,0.5) 0 0 0 5px;
+}
+#chat-window {
+    width: 100%;
+    height: 100%;
+    font-family:'Open Sans', sans-serif;font-size:18px; color:#cccccc;
+    margin:0px;
+    padding:0px;
+}
+#message-list {
+    margin:-14px 10px 10px 10px;
+    padding:0px;
+    padding-bottom:4px;
+}
+#message-list li{
+    text-shadow: 1.2px 1.2px 1.2px rgba(150, 150, 150, 1);
+    list-style: none;
+    font-color: white;
+    margin:0px;
+    line-height:24px;
+    background-color: rgba(0,0,0,0.5);
+}
+.runic {
+    font-family:sotaFont;
+}
+.localChat {
+    color:#ccccff;
+}
+.partyChat {
+    color:#ccffcc;
+}
+.myKills {
+    color:#ccffcc;
+}
+.whispersToMe, .whispersFromMe {
+    color:#ddccdd;
+}
+.guildChat {
+    color:#ccdddd;
+}
+
