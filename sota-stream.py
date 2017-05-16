@@ -10,22 +10,8 @@ from threading import Thread
 from time import sleep
 from twitchstream.chat import TwitchChatStream
 
-
-
-
-
-
-#playername = "Kor"
-#fname = "/home/kory/.config/Portalarium/Shroud of the Avatar/ChatLogs/SotAChatLog_Kor_2017-05-15.txt"
-#log_directory = "/home/kory/.config/Portalarium/Shroud of the Avatar/ChatLogs/"
-#twitch_username = "kigustarfish"
-#twitch_oauth = "oauth:z5ujjctq1apxzzn1bsfader24ia3pv"
-#twitch_enabled = True
-#max_size = 20
-##showregex = ['zoneChat', 'myDeaths', 'localKills', 'onlineOffline', 'guildChat', 'whispersToMe', 'selfCombat', 'myKills', 'localChat', 'partyChat'] #showregex = ['zoneChat', 'myDeaths', 'localKills', 'myKills', 'localChat', 'partyChat'] 
 dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
 config_file = "config.yml"
-
 
 class SotaStream(object):
     lastmessage = 0
