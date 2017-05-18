@@ -111,4 +111,5 @@ filethread.start()
 twitchthread.start()
 
 conf = {"/js": {"tools.staticdir.on":True,"tools.staticdir.dir":dir_path+"js/"},"/css": {"tools.staticdir.on":True,"tools.staticdir.dir":dir_path+"css/"}}
+cherrypy.server.socket_host = '0.0.0.0'
 cherrypy.quickstart(stream,'/',conf)
