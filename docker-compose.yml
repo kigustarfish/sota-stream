@@ -1,0 +1,7 @@
+sotastream:
+    build: .
+    container_name: sotastreamcontainer
+    expose:
+            - "8080"
+    volumes:
+            - /c/Users/kory/AppData/Roaming/Portalarium/Shroud of the Avatar/ChatLogs:/logs
