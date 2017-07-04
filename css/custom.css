@@ -21,11 +21,23 @@ body {
     font-family:'Open Sans', sans-serif;font-size:18px; color:#cccccc;
     margin:0px;
     padding:0px;
+    overflow-y: hidden;
+    -ms-overflow-style: none;  // IE 10+
+    overflow: -moz-scrollbars-none;  // Firefox
+}
+#chat-window::-webkit-scrollbar {
+	display: none;  // Safari and Chrome
+}
+#message-list::-webkit-scrollbar {
+	display: none;  // Safari and Chrome
 }
 #message-list {
     margin:-14px 10px 10px 10px;
     padding:0px;
     padding-bottom:4px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  // IE 10+
+    overflow: -moz-scrollbars-none;  // Firefox
 }
 #message-list li{
     text-shadow: 1.2px 1.2px 1.2px rgba(150, 150, 150, 1);

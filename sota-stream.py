@@ -6,9 +6,11 @@ import time
 import datetime
 import os
 import yaml
+import socket
+import string
+
 from threading import Thread
 from time import sleep
-from twitchstream.chat import TwitchChatStream
 
 dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
 config_file = "config.yml"
@@ -60,13 +62,44 @@ class SotaStream(object):
     def twitchloop(self):
         if config["twitch_enabled"] != 1:
             return
-        with TwitchChatStream(username=config["twitch_username"].lower(), oauth=config["twitch_oauth"], verbose=False) as chatstream:
-            while True:
-                received = chatstream.twitch_receive_messages()
-                for rcv in received:#{'username': 'kigustarfish', 'message': u'hi', 'channel': '#kigustarfish'}
-                    print rcv["username"] + " (From Twitch): " + rcv["message"]
-                    self.shiftlist(rcv["username"] + " (From Twitch): " + rcv["message"],"twitch")
-                sleep(3)
+
+        HOST = "irc.chat.twitch.tv"
+        PORT = 6667
+        PASS = config["twitch_oauth"]
+        NICK = config["twitch_username"]
+        CHANNEL = config["twitch_username"]
+
+        readbuffer=""
+
+        s=socket.socket( )
+        s.connect((HOST, PORT))
+        s.send("PASS " + PASS + "\r\n") 
+        s.send("NICK " + NICK + "\r\n")
+        s.send("JOIN #" + CHANNEL + "\r\n")
+
+        while True:
+            readbuffer=readbuffer+s.recv(1024)
+            temp=string.split(readbuffer, "\n")
+            readbuffer=temp.pop( )
+
+            print temp
+
+            for rcv in temp:
+                if "PING" in rcv:
+                    rcv=string.rstrip(rcv)
+                    rcv=string.split(rcv)
+
+                    if(rcv[0]=="PING"):
+                        s.send("PONG %s\r\n" % rcv[1])
+                        print "pong sent"
+                elif "PRIVMSG" in rcv:
+                    line = string.split(rcv, ":")
+                    user = string.split(line[1], "!")[0]
+                    message = line[2]
+                    print user
+                    print message
+                    self.shiftlist(user + " (From Twitch): " + message,"twitch")
+            sleep(3)
     def readloop(self):
         while True:
             strings = time.strftime("%Y,%m,%d").split(",")

@@ -6,11 +6,15 @@ $(function() {
 function doPoll(){
     $.post('/chat', function(data) {
         processData(JSON.parse(data));
-        setTimeout(doPoll,5000);
+        setTimeout(doPoll,1000);
     });
 }
+
+
 function processData(data) {
 	$("#message-list").empty();
+	data = data.reverse();
+	var index = 0;
 	for (datum in data) {
 		var item = data[datum];
                 var val = item.value;
@@ -21,17 +25,58 @@ function processData(data) {
 			val = attackString(val);
 		}
 		//$("<li class='"+item.type+"'>").text(val);
-		$("#message-list").append($("<li class='"+item.type+"'>").html(val));
-		$("#message-list li").each(function(){$(this).kappa();});
+		var element = $("<li id='message"+index+"' class='"+item.type+"'>").html(val);
+		$("#message-list").prepend(element);
+		index++;
+		if (!elementInViewport("message-list")) {
+			element.hide();
+			break;
+		}
+		
 	}
+	$("#message-list li").each(function(){$(this).kappa();});
 }
+
+function elementInViewport(el) {
+
+	  el = document.getElementById(el);
+	  var top = el.offsetTop;
+	  var left = el.offsetLeft;
+	  var width = el.offsetWidth;
+	  var height = el.offsetHeight;
+
+	  while(el.offsetParent) {
+		      el = el.offsetParent;
+		      top += el.offsetTop;
+		      left += el.offsetLeft;
+		    }
+
+	  return (
+		      top >= window.pageYOffset &&
+		      left >= window.pageXOffset &&
+		      (top + height) <= (window.pageYOffset + window.innerHeight) &&
+		      (left + width) <= (window.pageXOffset + window.innerWidth)
+		    );
+	}
+
+
+
+
+
 function attackString(data) {
 	data_parts = data.split(" attacks ");
 	attacker = data_parts[0];
 	killer = attacker
         if (data_parts[1].indexOf("and hits")!= -1) {
             if (data_parts[1].indexOf("damage.")!= -1) {
-		    return data;
+		    damage = parseInt(data_parts[1].split("dealing")[1].split("points")[0]);
+		    if (data_parts[1].indexOf("critical") != -1) {
+			damage = "<span class=\"crit\">" + damage + "</span>";
+		    } else {
+			damage = damage;
+		    }
+		    killed = data_parts[1].split("and")[0];
+		   return killer + " " + damage + " " + killed;
 	    } else {
 		    spell_parts = data_parts[1].split(" from ");
 		    killed = data_parts[1].split("and")[0];
@@ -39,7 +84,7 @@ function attackString(data) {
 		    spell = spell_parts[1].replace(".","").trim();
 		    damage = parseInt(data_parts[1].split("dealing")[1].split("points")[0]);
 		    if (data_parts[1].indexOf("critical") != -1) {
-			damage = "<span class=\"crit\">" + damage + "!</span>";
+			damage = "<span class=\"crit\">" + damage + "</span>";
 		    } else {
 			damage = damage;
 		    }
@@ -47,9 +92,9 @@ function attackString(data) {
 			if (imageExists(spellname)) {
 				return attacker + " <img src='" + spellname + "'/ height=24 width=24 style=\"position:relative; top:6px;\">&#x1f480;" + damage + " " + killed + "<span style=\"padding-left:4px;color: #bbbbbb; font-size:14px; line-height:16px;\">["+spell+"]</span>";
 			} else if (spellname != "Attack") {
-				return killer + damage + " "+ killed + " with "+spell;
+				return killer + " " + damage + " "+ killed + " with "+spell;
 			} else {
-				return killer + damage + " " + killed;
+				return killer + " " + damage + " " + killed;
 			}
 	    }
 	
